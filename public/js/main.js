@@ -36,3 +36,34 @@ document.getElementById('switchToSignup').addEventListener('click', () => openMo
 document.getElementById('switchToLogin').addEventListener('click', () => openModal('login'));
 modalClose.addEventListener('click', closeModal);
 authModal.addEventListener('click', (e) => { if (e.target === authModal) closeModal(); });
+
+// Contact form submission
+document.getElementById('contactForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById('contactMsg');
+  msg.textContent = '';
+
+  const name = document.getElementById('contactName').value;
+  const email = document.getElementById('contactEmail').value;
+  const message = document.getElementById('contactMessage').value;
+
+  try {
+    const res = await fetch('/api/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, message })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      msg.style.color = '#FF5D5D';
+      msg.textContent = data.error || 'Something went wrong';
+      return;
+    }
+    msg.style.color = '#2DD4BF';
+    msg.textContent = data.message;
+    document.getElementById('contactForm').reset();
+  } catch (err) {
+    msg.style.color = '#FF5D5D';
+    msg.textContent = 'Network error. Is the server running?';
+  }
+});

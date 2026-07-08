@@ -149,7 +149,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
   aspect-ratio: 1; border-radius: 16px;
   background-size: cover; background-position: center;
 }
-.gallery-1 { background: url('../images/gallery1.jpeg') center/cover no-repeat; } /* editable bg img */
+.gallery-1 { background: url('../images/gallery1.png') center/cover no-repeat; } /* editable bg img */
 .gallery-2 { background: url('../images/gallery2.jpg') center/cover no-repeat; } /* editable bg img */
 .gallery-3 { background: url('../images/gallery3.jpeg') center/cover no-repeat; } /* editable bg img */
 .gallery-4 { background: url('../images/gallery4.jpeg') center/cover no-repeat; } /* editable bg img */

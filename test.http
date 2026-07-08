@@ -1,0 +1,42 @@
+### Signup
+POST http://localhost:5050/api/auth/signup
+Content-Type: multipart/form-data; boundary=----boundary
+
+------boundary
+Content-Disposition: form-data; name="name"
+
+Test User
+------boundary
+Content-Disposition: form-data; name="age"
+
+21
+------boundary
+Content-Disposition: form-data; name="phone"
+
+9876543210
+------boundary
+Content-Disposition: form-data; name="email"
+
+test@example.com
+------boundary
+Content-Disposition: form-data; name="password"
+
+test123
+------boundary
+Content-Disposition: form-data; name="idProof"; filename="id.png"
+Content-Type: image/png
+
+< ./sample-id.png
+------boundary--
+
+### Login
+POST http://localhost:5050/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "test123"
+}
+
+### Logout
+POST http://localhost:5050/api/auth/logout

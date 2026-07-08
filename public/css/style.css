@@ -149,7 +149,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
   aspect-ratio: 1; border-radius: 16px;
   background-size: cover; background-position: center;
 }
-.gallery-1 { background: linear-gradient(135deg, var(--coral), var(--yellow)); } /* editable bg img */
+.gallery-1 { background: url('../images/gallery1.jpg') center/cover no-repeat; } /* editable bg img */
 .gallery-2 { background: linear-gradient(135deg, var(--violet), var(--teal)); } /* editable bg img */
 .gallery-3 { background: linear-gradient(135deg, var(--teal), var(--yellow)); } /* editable bg img */
 .gallery-4 { background: linear-gradient(135deg, var(--coral), var(--violet)); } /* editable bg img */

@@ -1,0 +1,102 @@
+const API_BASE = '/api/auth';
+
+function setLoggedInUI(name) {
+  document.getElementById('navLoginBtn').classList.add('hidden');
+  document.getElementById('navSignupBtn').classList.add('hidden');
+  document.getElementById('navLogoutBtn').classList.remove('hidden');
+  const greet = document.getElementById('navUserGreeting');
+  greet.textContent = `Hi, ${name}`;
+  greet.classList.remove('hidden');
+  document.getElementById('bookLoginNotice').classList.add('hidden');
+  document.getElementById('bookingForm').classList.remove('hidden');
+}
+
+function setLoggedOutUI() {
+  document.getElementById('navLoginBtn').classList.remove('hidden');
+  document.getElementById('navSignupBtn').classList.remove('hidden');
+  document.getElementById('navLogoutBtn').classList.add('hidden');
+  document.getElementById('navUserGreeting').classList.add('hidden');
+  document.getElementById('bookLoginNotice').classList.remove('hidden');
+  document.getElementById('bookingForm').classList.add('hidden');
+}
+
+// On page load, check localStorage for a display name (session cookie itself
+// is what actually protects backend routes; this is just for showing the UI state)
+const savedName = localStorage.getItem('momently_user_name');
+if (savedName) setLoggedInUI(savedName);
+
+// ===== SIGNUP =====
+document.getElementById('signupForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById('signupMsg');
+  msg.textContent = '';
+
+  const formData = new FormData();
+  formData.append('name', document.getElementById('signupName').value);
+  formData.append('age', document.getElementById('signupAge').value);
+  formData.append('phone', document.getElementById('signupPhone').value);
+  formData.append('email', document.getElementById('signupEmail').value);
+  formData.append('password', document.getElementById('signupPassword').value);
+  formData.append('idProof', document.getElementById('signupIdProof').files[0]);
+
+  try {
+    const res = await fetch(`${API_BASE}/signup`, { method: 'POST', body: formData });
+    const data = await res.json();
+    if (!res.ok) {
+      msg.style.color = '#FF5D5D';
+      msg.textContent = data.error || 'Signup failed';
+      return;
+    }
+    msg.style.color = '#2DD4BF';
+    msg.textContent = 'Signup successful! Please log in.';
+    setTimeout(() => {
+      document.getElementById('signupPane').classList.add('hidden');
+      document.getElementById('loginPane').classList.remove('hidden');
+    }, 1000);
+  } catch (err) {
+    msg.style.color = '#FF5D5D';
+    msg.textContent = 'Network error. Is the server running?';
+  }
+});
+
+// ===== LOGIN =====
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById('loginMsg');
+  msg.textContent = '';
+
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  try {
+    const res = await fetch(`${API_BASE}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      msg.style.color = '#FF5D5D';
+      msg.textContent = data.error || 'Login failed';
+      return;
+    }
+    localStorage.setItem('momently_user_name', data.name);
+    setLoggedInUI(data.name);
+    document.getElementById('authModal').classList.add('hidden');
+  } catch (err) {
+    msg.style.color = '#FF5D5D';
+    msg.textContent = 'Network error. Is the server running?';
+  }
+});
+
+// ===== LOGOUT =====
+document.getElementById('navLogoutBtn').addEventListener('click', async () => {
+  try {
+    await fetch(`${API_BASE}/logout`, { method: 'POST', credentials: 'include' });
+  } catch (err) {
+    // even if the network call fails, clear local UI state
+  }
+  localStorage.removeItem('momently_user_name');
+  setLoggedOutUI();
+});

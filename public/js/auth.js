@@ -31,16 +31,20 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
   const msg = document.getElementById('signupMsg');
   msg.textContent = '';
 
-  const formData = new FormData();
-  formData.append('name', document.getElementById('signupName').value);
-  formData.append('age', document.getElementById('signupAge').value);
-  formData.append('phone', document.getElementById('signupPhone').value);
-  formData.append('email', document.getElementById('signupEmail').value);
-  formData.append('password', document.getElementById('signupPassword').value);
-  formData.append('idProof', document.getElementById('signupIdProof').files[0]);
+  const payload = {
+    name: document.getElementById('signupName').value,
+    age: document.getElementById('signupAge').value,
+    phone: document.getElementById('signupPhone').value,
+    email: document.getElementById('signupEmail').value,
+    password: document.getElementById('signupPassword').value
+  };
 
   try {
-    const res = await fetch(`${API_BASE}/signup`, { method: 'POST', body: formData });
+    const res = await fetch(`${API_BASE}/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
     const data = await res.json();
     if (!res.ok) {
       msg.style.color = '#FF5D5D';

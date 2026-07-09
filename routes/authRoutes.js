@@ -1,25 +1,16 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const multer = require('multer');
-const path = require('path');
 const User = require('../models/User');
 
 const router = express.Router();
 
-// Multer setup for ID proof upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, '../public/uploads')),
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
-});
-const upload = multer({ storage });
-
 // SIGNUP
-router.post('/signup', upload.single('idProof'), async (req, res) => {
+router.post('/signup', async (req, res) => {
   try {
     const { name, age, phone, email, password } = req.body;
 
-    if (!name || !age || !phone || !email || !password || !req.file) {
-      return res.status(400).json({ error: 'All fields including ID proof are required' });
+    if (!name || !age || !phone || !email || !password) {
+      return res.status(400).json({ error: 'All fields are required' });
     }
 
     const existingUser = await User.findOne({ email });
@@ -34,8 +25,7 @@ router.post('/signup', upload.single('idProof'), async (req, res) => {
       age,
       phone,
       email,
-      password: hashedPassword,
-      idProofPath: req.file.filename
+      password: hashedPassword
     });
 
     await newUser.save();

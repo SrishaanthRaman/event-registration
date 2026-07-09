@@ -181,14 +181,21 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
 .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 2rem; }
 .team-card { background: rgba(255,255,255,0.04); border-radius: 20px; padding: 2rem; text-align: center; } /* editable bg clr — team card background */
 .team-photo {
-  width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 1rem;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
   background: linear-gradient(135deg, var(--violet), var(--coral));
-  .team-photo-1 {
-  background: url('../images/team1.jpg') center/cover no-repeat;
+  background-size: cover;
+  background-position: center;
 }
+
+.team-photo-1 {
+  background: url('../images/team1.png') center/cover no-repeat;
+}
+
 .team-photo-2 {
-  background: url('../images/team2.jpg') center/cover no-repeat;
-} /* editable bg img — replace with actual student photo */
+  background: url('../images/team2.png') center/cover no-repeat;
 }
 .team-role { color: var(--teal); font-weight: 600; font-size: 0.9rem; margin-bottom: 0.75rem; }
 .team-contribution { color: var(--text-muted); font-size: 0.9rem; }

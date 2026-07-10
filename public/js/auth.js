@@ -20,10 +20,27 @@ function setLoggedOutUI() {
   document.getElementById('bookingForm').classList.add('hidden');
 }
 
-// On page load, check localStorage for a display name (session cookie itself
-// is what actually protects backend routes; this is just for showing the UI state)
-const savedName = localStorage.getItem('momently_user_name');
-if (savedName) setLoggedInUI(savedName);
+// On page load, verify the REAL session with the server — don't just trust
+// localStorage, since the server session may have expired or reset (e.g.
+// after a server restart) even if the browser still remembers a name.
+(async function checkSession() {
+  try {
+    const res = await fetch(`${API_BASE}/me`, { credentials: 'include' });
+    if (res.ok) {
+      const data = await res.json();
+      localStorage.setItem('momently_user_name', data.name);
+      setLoggedInUI(data.name);
+    } else {
+      localStorage.removeItem('momently_user_name');
+      setLoggedOutUI();
+    }
+  } catch (err) {
+    // If the check itself fails (e.g. server briefly unreachable), fall back
+    // to logged-out UI rather than showing a false "logged in" state.
+    localStorage.removeItem('momently_user_name');
+    setLoggedOutUI();
+  }
+})();
 
 // ===== SIGNUP =====
 document.getElementById('signupForm').addEventListener('submit', async (e) => {

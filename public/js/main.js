@@ -37,16 +37,6 @@ document.getElementById('switchToLogin').addEventListener('click', () => openMod
 modalClose.addEventListener('click', closeModal);
 authModal.addEventListener('click', (e) => { if (e.target === authModal) closeModal(); });
 
-// Payment modal close logic
-const paymentModal = document.getElementById('paymentModal');
-const paymentModalClose = document.getElementById('paymentModalClose');
-const paymentDoneBtn = document.getElementById('paymentDoneBtn');
-
-function closePaymentModal() { paymentModal.classList.add('hidden'); }
-paymentModalClose.addEventListener('click', closePaymentModal);
-paymentDoneBtn.addEventListener('click', closePaymentModal);
-paymentModal.addEventListener('click', (e) => { if (e.target === paymentModal) closePaymentModal(); });
-
 // Contact form submission
 document.getElementById('contactForm').addEventListener('submit', async (e) => {
   e.preventDefault();

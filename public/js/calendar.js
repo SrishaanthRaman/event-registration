@@ -100,6 +100,11 @@ document.getElementById('bookingForm').addEventListener('submit', async (e) => {
     msg.style.color = '#2DD4BF';
     msg.textContent = `Booked! ${data.slotsLeftForDate} slot(s) left that day.`;
 
+    // Show payment modal right after a successful booking
+    document.getElementById('paymentModal').classList.remove('hidden');
+    document.getElementById('bookingForm').reset();
+    selectedDate = null;
+
     // Refresh availability cache for that month so dots update immediately
     const [y, m] = selectedDate.split('-');
     delete availabilityCache[monthKey(parseInt(y), parseInt(m) - 1)];

@@ -149,10 +149,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
   aspect-ratio: 1; border-radius: 16px;
   background-size: cover; background-position: center;
 }
-.gallery-1 { background: url('../images/gallery1.png') center/cover no-repeat; } /* editable bg img */
-.gallery-2 { background: url('../images/gallery2.jpg') center/cover no-repeat; } /* editable bg img */
-.gallery-3 { background: url('../images/gallery3.jpeg') center/cover no-repeat; } /* editable bg img */
-.gallery-4 { background: url('../images/gallery4.jpeg') center/cover no-repeat; } /* editable bg img */
+.gallery-1 { background: linear-gradient(135deg, var(--coral), var(--yellow)); } /* editable bg img */
+.gallery-2 { background: linear-gradient(135deg, var(--violet), var(--teal)); } /* editable bg img */
+.gallery-3 { background: linear-gradient(135deg, var(--teal), var(--yellow)); } /* editable bg img */
+.gallery-4 { background: linear-gradient(135deg, var(--coral), var(--violet)); } /* editable bg img */
 
 /* ===== BOOKING ===== */
 .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2rem; align-items: start; }
@@ -181,21 +181,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
 .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 2rem; }
 .team-card { background: rgba(255,255,255,0.04); border-radius: 20px; padding: 2rem; text-align: center; } /* editable bg clr — team card background */
 .team-photo {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  margin: 0 auto 1rem;
-  background: linear-gradient(135deg, var(--violet), var(--coral));
-  background-size: cover;
-  background-position: center;
-}
-
-.team-photo-1 {
-  background: url('../images/team1.png') center/cover no-repeat;
-}
-
-.team-photo-2 {
-  background: url('../images/team2.png') center/cover no-repeat;
+  width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 1rem;
+  background: linear-gradient(135deg, var(--violet), var(--coral)); /* editable bg img — replace with actual student photo */
 }
 .team-role { color: var(--teal); font-weight: 600; font-size: 0.9rem; margin-bottom: 0.75rem; }
 .team-contribution { color: var(--text-muted); font-size: 0.9rem; }
@@ -229,6 +216,26 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
 }
 .file-label { display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem; color: var(--text-muted); }
 .switch-auth { margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted); text-align: center; }
+
+/* ===== PAYMENT MODAL ===== */
+.payment-box { max-width: 480px; text-align: center; }
+.payment-box h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+.payment-details { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; margin: 1.5rem 0; }
+.qr-placeholder {
+  width: 180px; height: 180px; border-radius: 16px;
+  background: rgba(255,255,255,0.06); /* editable bg clr — QR code background frame */
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.75rem;
+}
+.qr-placeholder img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
+.qr-fallback { color: var(--text-muted); font-size: 0.85rem; padding: 1rem; }
+.bank-details {
+  background: rgba(255,255,255,0.04); border-radius: 14px; padding: 1.25rem 1.5rem; /* editable bg clr — bank details card background */
+  text-align: left; width: 100%;
+}
+.bank-details p { font-size: 0.9rem; color: var(--text-light); margin: 0.35rem 0; }
+.bank-details strong { color: var(--yellow); }
+.payment-note { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem; }
 
 /* ===== FLATPICKR DOT OVERRIDES ===== */
 .day-dots { display: flex; gap: 2px; justify-content: center; margin-top: 2px; }

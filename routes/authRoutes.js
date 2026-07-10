@@ -66,20 +66,4 @@ router.post('/logout', (req, res) => {
   });
 });
 
-// CHECK CURRENT SESSION
-router.get('/me', async (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ error: 'Not logged in' });
-  }
-  try {
-    const user = await User.findById(req.session.userId);
-    if (!user) {
-      return res.status(401).json({ error: 'Session invalid' });
-    }
-    res.status(200).json({ name: user.name });
-  } catch (err) {
-    res.status(401).json({ error: 'Session invalid' });
-  }
-});
-
 module.exports = router;
